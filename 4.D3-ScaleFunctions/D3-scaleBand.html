@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3-demo</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <svg width="1000" height="500">
+        <g class="chart" transform="translate(50, 30)">
+        </g>
+    </svg>
+    <script type="text/javascript">
+
+        var myData = ["one", "two", "three", "four"];
+        var bandScale = d3.scaleBand()
+            .domain(myData)
+            .range([0, 100])
+        bandScale.paddingInner(0.5);
+
+        d3.select('.chart')
+            .selectAll('rect')
+            .data(myData)
+            .join('rect')
+            .attr('x', function (d, i) {
+                return bandScale(d);
+            })
+            .attr('y', 0)
+            .attr('height', function (d, i) {
+                return 150;
+            })
+            .attr('width', function (d) {
+                return bandScale.bandwidth();
+            })
+            .style('stroke', 'black')
+            .style('fill', function (d) {
+                return 'steelblue'
+            });
+
+    </script>
+</body>
+
+</html>

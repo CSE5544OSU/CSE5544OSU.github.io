@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3-demo</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <svg width="1000" height="500">
+        <g class="chart" transform="translate(50, 30)">
+        </g>
+    </svg>
+    <script type="text/javascript">
+
+        var data = [new Date(2016, 0, 1), new Date(2018, 3, 1), 
+            new Date(2020, 6, 1), new Date(2022, 0, 1)];
+        var timeScale = d3.scaleTime()
+            .domain([new Date(2016, 0, 1), new Date(2023, 0, 1)])
+            .range([0, 600]);
+
+        d3.select('.chart')
+            .selectAll('circle')
+            .data(data)
+            .join('circle')
+            .attr('r', 3)
+            .attr('cx', function (d) {
+                return timeScale(d);
+            })
+            .style('fill', 'orange');
+
+        d3.select('.chart')
+            .selectAll('text')
+            .data(data)
+            .join('text')
+            .attr('r', 3)
+            .attr('x', function (d) {
+                return timeScale(d) - 5;
+            })
+            .attr('y', -8)
+            .text(function (d) {
+                return d.toDateString();
+            });
+
+
+
+    </script>
+</body>
+
+</html>

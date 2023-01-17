@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3-demo</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <svg width="1000" height="500">
+        <g class="chart" transform="translate(50, 30)">
+        </g>
+    </svg>
+    <script type="text/javascript">
+
+        
+
+        var linearScale = d3.scaleLinear()
+            .domain([0, 11])
+            .range([0, 600]);
+
+        var data = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        var ordinalScale = d3.scaleOrdinal()
+            .domain(data)
+            .range(['blue', 'orange', 'green', 'red']);
+
+
+        d3.select('.chart')
+            .selectAll('text')
+            .data(data)
+            .join('text')
+            .attr('x', function (d, i) {
+                return linearScale(i);
+            })
+            .text(function (d) {
+                return d;
+            })
+            .style('fill', function (d) {
+                return ordinalScale(d);
+            });
+
+    </script>
+</body>
+
+</html>
