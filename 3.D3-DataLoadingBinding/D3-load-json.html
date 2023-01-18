@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        svg {
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <svg>
+        <g class="chart">
+        </g>
+    </svg>
+
+    <script type="text/javascript">
+        var app = async function () {
+            var data = await d3.json("iris.json");
+            console.log(data);
+
+            // d3.json("iris.json")
+            //     .then(function (data) {
+            //         console.log(data);
+            //     });
+        }
+        app();
+
+
+
+
+
+    </script>
+</body>
+
+</html>

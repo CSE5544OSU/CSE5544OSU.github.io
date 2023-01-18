@@ -2,6 +2,8 @@
 
 This repository contains a sequence of D3 examples, slides and lecture videos. Created by Rui Li and Zefeng Qiu at The Ohio State University.
 
+![](https://komarev.com/ghpvc/?username=CSE5544OSU&label=tutorial+views)
+
 ## D3 Lectures and Examples
 
 * Course 0: Web Foundations [[lecture slides]](https://cse5544osu.github.io/slides/1.D3-WebFoundations.pdf)[[lecture video]](https://urldefense.com/v3/__https://osu.zoom.us/rec/share/V1ZLrQBkttoUQSG1qXDBqgCpsSIXugb169HxQYFwyNNByqVJJLTRTB6ioQ2j28Ws.FaxpunJxPUdC2Ymk__;!!KGKeukY!zbIM4y-jGEPN55r4AJS8JgXOa-ZfXffHLtd4_4xRHGrF6YZwMYVZXG6ZeKtjoKn1K6qYvQSyJjViVD3cxqKB$)
@@ -24,7 +26,14 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
         * scaleOrdinal
         * scaleBand
     * Color schemes
+        * categorical color schemes
+        * continuous color schemes
     * Axes
+        * create axis
+        * axis orientation
+        * number of ticks
+        * tick format
+        * tick value
 * Course 2: D3 Shapes, Layout, and Interactions   
     * SVG Shapes
         * heatmap

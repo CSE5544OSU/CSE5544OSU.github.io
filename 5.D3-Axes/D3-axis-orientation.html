@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3-demo</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <svg width="1000" height="500">
+        <g id="left" transform="translate(30, 40)"></g>
+        <g id="right" transform="translate(450, 40)"></g>
+        <g id="top" transform="translate(40, 30)"></g>
+        <g id="bottom" transform="translate(40, 450)"></g>
+    </svg>
+    <script type="text/javascript">
+
+        var linearScale = d3.scaleLinear()
+            .domain([0, 100])
+            .range([0, 400]);
+
+        let axisLeft = d3.axisLeft(linearScale);
+        let axisRight = d3.axisRight(linearScale);
+        let axisTop = d3.axisTop(linearScale);
+        let axisBottom = d3.axisBottom(linearScale);
+
+        d3.select('#left').call(axisLeft);
+        d3.select('#right').call(axisRight);
+        d3.select('#top').call(axisTop);
+        d3.select('#bottom').call(axisBottom);
+
+    </script>
+</body>
+
+</html>
