@@ -73,7 +73,7 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
     * Animation & Transition
         * simple transition
 * Course 3: D3 GeoSpatial visualization and multi-view visualization
-    * Geospatial * Map 
+    * Geospatial visualization 
         * map
         * choropleth
         * hexbin map
