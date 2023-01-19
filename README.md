@@ -6,12 +6,12 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
 
 ## D3 Lectures and Examples
 
-* Course 0: Web Foundations [[lecture slides]](https://cse5544osu.github.io/slides/1.D3-WebFoundations.pdf)[[lecture video]](https://urldefense.com/v3/__https://osu.zoom.us/rec/share/V1ZLrQBkttoUQSG1qXDBqgCpsSIXugb169HxQYFwyNNByqVJJLTRTB6ioQ2j28Ws.FaxpunJxPUdC2Ymk__;!!KGKeukY!zbIM4y-jGEPN55r4AJS8JgXOa-ZfXffHLtd4_4xRHGrF6YZwMYVZXG6ZeKtjoKn1K6qYvQSyJjViVD3cxqKB$)
+* Course 0: Web Foundations [[lecture slides]](https://cse5544osu.github.io/slides/1.D3-WebFoundations.pdf)[[lecture video]](https://youtu.be/o23gU0LzBCI)
     * [HTML](https://cse5544osu.github.io/WebFoundations/index.html)
     * [CSS](https://cse5544osu.github.io/WebFoundations/html-with-css.html)
     * [JavaScript](https://cse5544osu.github.io/WebFoundations/html-with-js.html)
     * [SVG](https://cse5544osu.github.io/WebFoundations/svg.html)
-* Course 1: D3 Basics [[lecture slides]](https://cse5544osu.github.io/slides/2.D3-Basics.pdf)[[lecture video]](https://urldefense.com/v3/__https://osu.zoom.us/rec/share/56Sk9DXBadx8bNcBBfwzPLLC2VngGMmU3xz22OCjrss_fMVjYfwDBLY_UpKBnU_P.Kf7bD1WQxpg1UPEO__;!!KGKeukY!1X90UOG9X4Gd7ToksWBGjxPkjlFwjtDNvS5UzOnic9qAoCvro2ifzHQsxMvbh-AB0hQTM4sMQFDm9aIq7ptC$)
+* Course 1: D3 Basics [[lecture slides]](https://cse5544osu.github.io/slides/2.D3-Basics.pdf)[[lecture video]](https://youtu.be/fHoRag8TzjM)
     * [Simple bar chart demo](https://cse5544osu.github.io/1.D3-BarExample/index.html)
     * Data loading and binding
         * [Load csv files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-csv.html) (check the console for results)
