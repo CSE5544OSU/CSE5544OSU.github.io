@@ -12,11 +12,11 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
     * [JavaScript](https://cse5544osu.github.io/WebFoundations/html-with-js.html)
     * [SVG](https://cse5544osu.github.io/WebFoundations/svg.html)
 * Course 1: D3 Basics
-    * Simple bar chart demo
+    * [Simple bar chart demo](https://cse5544osu.github.io/1.D3-BarExample/index.html)
     * Data loading and binding
-        * Load csv files
-        * Load json files
-        * Data joins
+        * [Load csv files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-csv.html) (check the console for results)
+        * [Load json files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-json.html) (check the console for results)
+        * [Data joins](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-data-joins.html)
     * Scale functions
         * scaleLinear
         * scaleTime
