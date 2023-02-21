@@ -37,7 +37,7 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
     * Legend
         * [legend from scratch](https://cse5544osu.github.io/D3-Color-Legend/D3-legend-scratch.html)
         * [D3 Color-legend lib](https://cse5544osu.github.io/D3-Color-Legend/D3-legend.html)
-* Course 2: D3 Shapes, Layout, and Interactions   
+* Course 2: D3 Shapes and Layout [[lecture slides]](https://cse5544osu.github.io/slides/3.D3-Shape.Layout.Interaction.pdf)[[lecture video]](https://youtu.be/MehuPLwsw9M)  
     * SVG Shapes
         * [heatmap](https://cse5544osu.github.io/6.D3-Shapes/SVGshapes/D3-heatmap.html)
         * [scatter](https://cse5544osu.github.io/6.D3-Shapes/SVGshapes/D3-scatter.html)

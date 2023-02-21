@@ -72,8 +72,7 @@
             svg
                 .selectAll("myline")
                 .data(data)
-                .enter()
-                .append("line")
+                .join("line")
                 .attr("x1", function (d) {
                     return x(d.name);
                 })
