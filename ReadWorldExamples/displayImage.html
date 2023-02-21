@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        svg {
+            width: 800px;
+            height: 800px;
+            border: 1px solid #eee;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <svg>
+        
+    </svg>
+
+    <script>
+
+        // load external image
+        const image = d3.select('svg').append('image')
+            .attr('xlink:href', 'demo.png')
+            .attr('width', 600) //set the width of image, d3 will keep the aspect ratio automatically
+
+        // generate the line
+        const lineGenerator = d3.line();
+        const points = [
+            [0, 0],
+            [100, 100]
+        ];
+        const pathData = lineGenerator(points);
+
+        // draw a line from 0,0 to 100,100
+        d3.select('svg').append('path')
+            .attr('d', pathData)
+            .attr('stroke-width', 2)
+            .attr('stroke','#3afa56');
+
+    </script>
+
+
+</body>
+
+</html>

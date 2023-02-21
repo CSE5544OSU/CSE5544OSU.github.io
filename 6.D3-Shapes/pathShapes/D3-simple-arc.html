@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Simple arc</title>
+</head>
+<body>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz" style="width: 600px; height: 600px;"></div>
+
+    <script>
+
+        // set the dimensions and margins of the graph
+        const margin = {top: 10, right: 30, bottom: 30, left: 50},
+              width = 460 - margin.left - margin.right,
+              height = 400 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        const svg = d3.select("#my_dataviz")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(100,100)");
+        
+        //d3.arc() returns a generator that when called automatically generates and returns a string of characters that can be assigned to the d attribute of a path element to define an arc, circle, or annulus.
+        var arcGen = d3.arc()
+        .innerRadius(0)
+        .outerRadius(90)
+        .startAngle(Math.PI/4)
+        .endAngle(3*Math.PI/4);
+        
+        //The arc generator returns the string that is assigned to the d attribute of the path element.  To render the arc (in this case a quarter of a circle) we append a path element to the g element and set its d attribute equal to the string returned by arcGen.
+        d3.select("#my_dataviz g")
+        .append("path")
+        .attr("d", arcGen)
+        .attr("fill", "pink")
+        .attr("stroke", "gray")
+    .   attr("stroke-width", 1);
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!--load d3.js v7-->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--This is a fast library for computing the Voronoi diagram of a set of two-dimensional points. It is based on Delaunator, a fast library for computing the Delaunay triangulation using sweep algorithms. The Voronoi diagram is constructed by connecting the circumcenters of adjacent triangles in the Delaunay triangulation.-->
+    <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
+    <title>Simple Voronoi graph</title>
+</head>
+<body>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz" style="width: 600px; height: 600px;"></div>
+
+    <script>
+        // Set the dimensions and margins of the graph
+        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+            width = 600 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;
+
+        // Append the svg object to the body of the page
+        var svg = d3.select("#my_dataviz")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+        // Create some random data
+        var data = d3.range(20).map(function(d) {
+          return [Math.random()*width, Math.random()*height];
+        });
+
+        var delaunay = d3.Delaunay.from(data); //Returns the Delaunay triangulation for the given array or iterable of points
+        var voronoi = delaunay.voronoi([0, 0, width, height]); //Returns the Voronoi diagram for the associated points. When rendering, the diagram will be clipped to the specified bounds = [xmin, ymin, xmax, ymax]
+
+        // Draw the voronoi cells
+        svg.append("g")
+            .selectAll("path")
+            .data(voronoi.cellPolygons()) //Returns an iterable over the non-empty polygons for each cell, with the cell index as property
+            .enter()
+            .append("path")
+              .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null; }) 
+              .style("fill", "none")
+              .style("stroke", "black");
+
+        // Draw the data points
+        svg.append("g")
+            .selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+              .attr("cx", function(d) { return d[0]; })
+              .attr("cy", function(d) { return d[1]; })
+              .attr("r", 2)
+              .style("fill", "red");
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Simple Scatter</title>
+</head>
+
+<body>
+    <!-- Create a div where the graph will take place -->
+    <div id="chart" style="width: 600px; height: 600px;">
+
+<script>
+
+    async function Scatter() {
+
+        //load the data
+        const data = await d3.csv("datasets/iris.csv");
+        console.log(data);
+
+        //set up the svg
+        const margin = {
+                top: 10,
+                right: 30,
+                bottom: 30,
+                left: 60
+            },
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        const svg = d3
+            .select("#chart")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+
+        // Add X axis
+        const x = d3
+            .scaleLinear()
+            .domain([4, 8])
+            .range([60, width + 60]);
+        const xAxis = svg
+            .append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        // Add Y axis
+        const y = d3
+            .scaleLinear()
+            .domain([0, 9])
+            .range([height, 5]);
+        const yAxis = svg
+            .append("g")
+            .attr("transform", "translate(60,0)")
+            .call(d3.axisLeft(y));
+
+        // Color scale: each specie name matches a color
+        const color = d3
+            .scaleOrdinal()
+            .domain(["setosa", "versicolor", "virginica"])
+            .range(["#e41a1c", "#377eb8", "#4daf4a"])
+
+        //Add points
+        var points = svg
+            .append('g')
+            .selectAll('dot')
+            .data(data)
+            .join('circle')
+            .attr('cx', function (d, i) {
+                return x(d.Sepal_Length);
+            })
+            .attr('cy', function (d, i) {
+                return y(d.Petal_Length);
+            })
+            .attr('r', 4)
+            .style('fill', function (d, i) {
+                return color(d.Species);
+            })
+    }
+
+    Scatter();
+</script>
+
+</body>
+
+</html>

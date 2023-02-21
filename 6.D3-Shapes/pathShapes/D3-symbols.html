@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Symbols</title>
+</head>
+<body>
+    <svg width="700" height="120">
+        <g transform="translate(20, 10)"></g>
+    </svg>
+
+</body>
+
+<script>
+    //The symbol generator produces path data for symbols commonly used in data visualisation
+    var symbolGenerator = d3
+        .symbol()
+        .type(d3.symbolWye)  //Other symbols: d3.symbolCircle d3.symbolCross d3.symbolDiamond  d3.symbolSquare d3.symbolTriangle d3.symbolStar
+        .size(80);
+        
+    //location of symbols
+    var points = [
+	[0, 80],
+	[100, 100],
+	[200, 30],
+	[300, 20],
+	[400, 40],
+	[500, 80]
+    ]
+
+    var pathData = symbolGenerator();
+    
+    //You can use pathData to define the d attribute of a path element:
+    d3.select('g')
+        .selectAll('path')
+        .data(points)
+        .join('path')
+        .attr('transform', function (d) {
+            return 'translate(' + d + ')';
+        })
+        .attr('d', pathData);
+</script>
+
+
+</html>

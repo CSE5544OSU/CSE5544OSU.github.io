@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        svg {
+            width: 600px;
+            height: 400px;
+            /* background-color: bisque; */
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <svg>
+        <g class="chart" transform="translate(50, 30)">
+        </g>
+    </svg>
+
+    <script>
+        async function app() {
+
+            // load data
+            function convertRow(d) {
+                return {
+                    name: d.name,
+                    population: +d.population
+                }
+            }
+            const data = await d3.csv('city.csv', convertRow);
+            console.log(data);  //d3 interprets numbers in CSV files as strings!
+
+            var barHeight = 25;
+            // bind the data
+            // d3.select('.chart')
+            //     .selectAll('text')
+            //     .data(data)
+            //     .join('text')
+            //     .attr("dy", "18px")
+            //     .attr("x", 0)
+            //     .attr("y", function (d, i) {
+            //         return i * barHeight;
+            //     })
+            //     .attr("font-size", 16)
+            //     .text(function (d, i) {
+            //         return d.name;
+            //     });
+
+            // d3.select('.chart')
+            //     .selectAll('rect')
+            //     .data(data)
+            //     .join('rect')
+            //     .attr("x", 80)
+            //     .attr("y", function (d, i) {
+            //         return i * barHeight;
+            //     })
+            //     .attr("width", function (d, i) {
+            //         return d.population / 30000;
+            //     })
+            //     .attr("height", barHeight)
+            //     .style("fill", "steelblue")
+            //     .style("stroke", "white");
+
+            //console.log(d3.max(data.map(d => d.population)));
+            var xScale = d3.scaleLinear()
+                .domain([0, d3.max(data.map(d => d.population))])  //d3.max(data.map(d => d.population))
+                .range([0, 400]);
+
+            var yScale = d3.scaleBand()
+                .domain(data.map(d => d.name))
+                .range([0, 120])
+
+            var colorScale = d3.scaleSequential()
+                .domain([0, 12000000])
+                .interpolator(d3.interpolateBlues);
+
+            // d3.select('.chart')
+            //     .selectAll('text')
+            //     .data(data)
+            //     .join('text')
+            //     .attr("dy", "18px")
+            //     .attr("x", 0)
+            //     .attr("y", function (d, i) {
+            //         return yScale(d.name);
+            //     })
+            //     .attr("font-size", 16)
+            //     .text(function (d, i) {
+            //         return d.name;
+            //     });
+
+            d3.select('.chart')
+                .selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr("x", 80)
+                .attr("y", function (d, i) {
+                    return yScale(d.name);
+                })
+                .attr("width", function (d, i) {
+                    return xScale(d.population);
+                })
+                .attr("height", yScale.bandwidth())
+                .style("fill", function (d, i) {
+                    return colorScale(d.population);
+                })
+                .style("stroke", "white");
+
+            //axis
+            d3.select('svg').append("g")
+                .attr("transform", "translate(130,150)")
+                .call(d3.axisBottom(xScale).ticks(5))
+
+            d3.select('svg').append("g")
+                .attr("transform", "translate(130,30)")
+                .call(d3.axisLeft(yScale).ticks(5))
+
+            //continous legend
+
+            let legendData = d3.range(0, d3.max(data.map(d => d.population)), d3.max(data.map(d => d.population)) / 10);
+            let legendXScale = d3.scaleLinear()
+                .domain([0, d3.max(data.map(d => d.population))])
+                .range([0, 300])
+            d3.select('svg')
+                .append("g")
+                .attr("transform", "translate(50,250)")
+                .selectAll('rect')
+                .data(legendData)
+                .join('rect')
+                .attr('x', function (d, i) {
+                    return legendXScale(d);
+                })
+                .attr('width', 20)
+                .attr('height', 10)
+                .style('fill', function (d) {
+                    return colorScale(d);
+                });
+
+            d3.select('svg').append("g")
+                .attr("transform", "translate(50,260)")
+                .call(d3.axisBottom(legendXScale).ticks(5))
+
+        }
+
+        app();
+    </script>
+
+
+</body>
+
+</html>

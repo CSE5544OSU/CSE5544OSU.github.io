@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Spider radar chart</title>
+</head>
+<body>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz" style="width: 600px; height: 600px;">
+    </body>
+<script>
+
+    //This script were credited from:https://yangdanny97.github.io/blog/2019/03/01/D3-Spider-Chart
+    let data = [];
+    let features = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+    ];
+    //generate the data
+    for (var i = 0; i < 3; i++) {
+        var point = {}
+        //each feature will be a random number from 1-9
+        features.forEach(f => point[f] = 1 + Math.random() * 8); //the code within bracket equivalent to function(f){ point[f] = 1 + Math.random() * 8; }
+        data.push(point);
+    }
+    console.log(data);
+
+    //set SVG
+    let width = 600;
+    let height = 600;
+    let svg = d3.select("#my_dataviz").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
+    //make a scale to map our data values to their radial distance from the center of the chart
+    let radialScale = d3.scaleLinear()
+    .domain([0, 10])
+    .range([0, 250]);
+    let ticks = [2, 4, 6, 8, 10];
+
+    // add some circles to mark the positions of the ticks we previously set
+    svg.selectAll("circle")
+    .data(ticks)
+    .join(
+        enter => enter.append("circle")
+            .attr("cx", width / 2)
+            .attr("cy", height / 2)
+            .attr("fill", "none")
+            .attr("stroke", "gray")
+            .attr("r", d => radialScale(d))
+    );
+
+    //add text labels for the ticks
+    svg.selectAll(".ticklabel")
+    .data(ticks)
+    .join(
+        enter => enter.append("text")
+            .attr("class", "ticklabel")
+            .attr("x", width / 2 + 5)
+            .attr("y", d => height / 2 - radialScale(d))
+            .text(d => d.toString())
+    );
+
+    //write a function which maps an angle and value (polar coordinates) into SVG coordinates using simple trig. The function outputs a JSON object with an x and y field to represent the coordinate
+    function angleToCoordinate(angle, value){
+        let x = Math.cos(angle) * radialScale(value);
+        let y = Math.sin(angle) * radialScale(value);
+        return {"x": width / 2 + x, "y": height / 2 - y};
+    }
+
+    //For SVG line elements, there are four attributes that specify the starting and ending x and y coordinates of the line. We map the text labels to a radius slightly larger than the largest circle to prevent overlaps.
+    let featureData = features.map((f, i) => {
+    let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+    return {
+        "name": f,
+        "angle": angle,
+        "line_coord": angleToCoordinate(angle, 10),
+        "label_coord": angleToCoordinate(angle, 10.5)
+            } ;
+    });
+
+    // draw axis line
+    svg.selectAll("line")
+    .data(featureData)
+    .join(
+        enter => enter.append("line")
+            .attr("x1", width / 2)
+            .attr("y1", height / 2)
+            .attr("x2", d => d.line_coord.x)
+            .attr("y2", d => d.line_coord.y)
+            .attr("stroke","black")
+    );
+
+    // draw axis label
+    svg.selectAll(".axislabel")
+    .data(featureData)
+    .join(
+        enter => enter.append("text")
+            .attr("x", d => d.label_coord.x)
+            .attr("y", d => d.label_coord.y)
+            .text(d => name)
+    );
+    
+    //Now, we will draw the shapes for the actual data. We will first define a helper function to generate the coordinates for the vertices of each shape, and an array of colors (we only need 3 of them since we know our data only has 3 points, but for larger datasets you can use an scaleOrdinal and map to an array of more colors
+    let line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y);
+    let colors = ["orange", "grey", "navy"];
+    
+    // a helper function that iterates through the fields in each data point in order and use the field name and value to calculate the coordinate for that attribute. The coordinates are pushed into an array and returned.
+    function getPathCoordinates(data_point){
+        let coordinates = [];
+        for (var i = 0; i < features.length; i++){
+            let ft_name = features[i];
+            let angle = (Math.PI /2) + (2 * Math.PI * i / features.length);
+            coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
+        }
+    return coordinates;
+    }
+
+    // draw the path element
+    svg.selectAll("path")
+    .data(data)
+    .join(
+        enter => enter.append("path")
+            .datum(d => getPathCoordinates(d))
+            .attr("d", line)
+            .attr("stroke-width", 3)
+            .attr("stroke", (_, i) => colors[i])
+            .attr("fill", (_, i) => colors[i])
+            .attr("stroke-opacity", 1)
+            .attr("opacity", 0.5)
+    );
+</script>
+
+</html>

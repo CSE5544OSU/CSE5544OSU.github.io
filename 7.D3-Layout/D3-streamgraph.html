@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="swatches.js"></script>
+
+    <style>
+        svg {
+            width: 600px;
+            height: 600px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="legend">
+
+    </div>
+    <svg id="chart">
+
+    </svg>
+
+    <script>
+        async function program() {
+
+            //load the dataset and define keys for grouping
+            var data = await d3.csv("datasets/babynames.csv");
+            console.log(data);
+
+            // define svg object
+            var margin = { top: 20, right: 30, bottom: 30, left: 30 };
+            var width = 500 - margin.left - margin.right;
+            var height = 450 - margin.top - margin.bottom;
+
+            // create svg
+            var svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                    `translate(${margin.left}, ${margin.top})`);
+
+            //build x-axis
+            // List of groups = header of the csv files
+            const keys = data.columns.slice(1)
+
+            //add the legend
+            const discreteLegend = Swatches(d3.scaleOrdinal(keys, d3.schemeTableau10), {
+                columns: "600px"
+            });
+            d3.select("#legend").html(discreteLegend);
+
+            // Add X axis
+            const x = d3.scaleLinear()
+                .domain(d3.extent(data, function (d) { return d.year; }))
+                .range([0, width]);
+            svg.append("g")
+                .attr("transform", `translate(0, ${height})`)
+                .call(d3.axisBottom(x).ticks(10))
+                .select(".domain").remove()
+
+            // Add X axis label:
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", width)
+                .attr("y", height - 30)
+                .text("Time (year)");
+
+            // Add Y axis
+            const y = d3.scaleLinear()
+                .domain([-100000, 100000])
+                .range([height, 0]);
+
+            // only applicable to stackOffsetExpand
+            // const y = d3.scaleLinear()
+            //     .domain([0, 1])
+            //     .range([height, 0]);
+
+            // color palette
+            const color = d3.scaleOrdinal()
+                .domain(keys)
+                .range(d3.schemeTableau10);
+
+            //stack the data
+            /*
+             * stackOffsetNone
+             stackOffsetSilhouette
+             stackOffsetExpand
+             stackOffsetWiggle
+             */
+            const stackedData = d3.stack()
+                .offset(d3.stackOffsetSilhouette)
+                .keys(keys)
+                (data)
+
+            console.log(stackedData);
+
+            // Area generator
+            const area = d3.area()
+                .x(function (d) { return x(d.data.year); })
+                .y0(function (d) { return y(d[0]); })
+                .y1(function (d) { return y(d[1]); })
+
+            // Show the areas
+            svg
+                .selectAll("mylayers")
+                .data(stackedData)
+                .join("path")
+                .attr("class", "myArea")
+                .style("fill", function (d) { return color(d.key); })
+                .attr("d", area)
+
+
+        }
+
+
+        program();
+    </script>
+
+
+</body>
+
+</html>

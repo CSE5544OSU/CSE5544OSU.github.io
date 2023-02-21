@@ -34,37 +34,35 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
         * [number of ticks](https://cse5544osu.github.io/5.D3-Axes/D3-axis-number-of-ticks.html)
         * [tick format](https://cse5544osu.github.io/5.D3-Axes/D3-axis-tick-format.html)
         * [tick value](https://cse5544osu.github.io/5.D3-Axes/D3-axis-tick-values.html)
+    * Legend
+        * [legend from scratch](https://cse5544osu.github.io/D3-Color-Legend/D3-legend-scratch.html)
+        * [D3 Color-legend lib](https://cse5544osu.github.io/D3-Color-Legend/D3-legend.html)
 * Course 2: D3 Shapes, Layout, and Interactions   
     * SVG Shapes
-        * heatmap
-        * scatter
-        * lollipop chart
+        * [heatmap](https://cse5544osu.github.io/6.D3-Shapes/SVGshapes/D3-heatmap.html)
+        * [scatter](https://cse5544osu.github.io/6.D3-Shapes/SVGshapes/D3-scatter.html)
+        * [lollipop chart](https://cse5544osu.github.io/6.D3-Shapes/SVGshapes/D3-lollipop-chart.html)
     * Path shape
-        * line chart
-        * curved line chart [](https://www.d3indepth.com/shapes/#curve)
-        * parallel coordinates
-        * radar chart
-        * area chart [](https://www.d3indepth.com/shapes/#area-generator)
-        * simple arc
-        * symbols [](https://www.d3indepth.com/shapes/#symbols)
+        * [line chart](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-linechart.html)
+        * [curved line chart](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-curved-linechart.html)
+        * [parallel coordinates](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-parallel-coordinates.html)
+        * [radar chart](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-radar-chart.html)
+        * [area chart](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-areachart.html)
+        * [simple arc](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-simple-arc.html)
+        * [symbols](https://cse5544osu.github.io/6.D3-Shapes/pathShapes/D3-symbols.html)
     * Layout
-        * donut chart (pie generator)
-        * stacked bar chart
-        * streamgraph
-        * voronoi
-        * histogram
-        * convex hull
-        * text cloud
+        * [donut chart](https://cse5544osu.github.io/7.D3-Layout/D3-donutchart.html)
+        * [stacked bar chart](https://cse5544osu.github.io/7.D3-Layout/D3-stackedbar.html)
+        * [streamgraph](https://cse5544osu.github.io/7.D3-Layout/D3-streamgraph.html)
+        * [voronoi](https://cse5544osu.github.io/7.D3-Layout/D3-voronoi.html)
+        * [chord](https://cse5544osu.github.io/7.D3-Layout/D3-chord.html)
+        * [Forced-directed layout](https://cse5544osu.github.io/7.D3-Layout/D3-network.html)
+* Course 3: Hierachical-layout, GeoSpatial visualization, and Interactions
     * Hierarchical-Layouts
         * tree layout
         * treemap (treemap layout)
         * packed circles (pack layout)
         * sunburst (partition layout)
-    * Chord diagrams
-        * chord diagram
-        * sankey diagram
-    * Forced-directed layout
-        * Network
     * Interactions
         * brush
         * lasso selection
@@ -72,7 +70,6 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
         * mouse
     * Animation & Transition
         * simple transition
-* Course 3: D3 GeoSpatial visualization and multi-view visualization
     * Geospatial visualization 
         * map
         * choropleth

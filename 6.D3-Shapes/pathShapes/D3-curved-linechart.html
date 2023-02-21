@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        svg {
+            width: 600px;
+            height: 400px;
+            /* background-color: bisque; */
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <svg id="chart">
+
+    </svg>
+
+    <script>
+        async function program() {
+            //load the data
+            const parseTime = d3.timeParse("%Y-%m-%d");
+            function convertRow(d) {
+                return {
+                    date: parseTime(d.date),
+                    value: +d.value
+                }
+            }
+
+            var data = await d3.csv("datasets/linechart.csv", convertRow);
+            data = data.slice(0,10);
+
+            console.log(data);
+
+            //set up the svg
+            const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+                width = 460 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            // append the svg object to the body of the page
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+            // Add X axis --> it is a date format
+            const x = d3.scaleTime()
+                .domain(d3.extent(data, function (d) { return d.date; }))
+                .range([0, width]);
+            svg.append("g")
+                .attr("transform", `translate(0, ${height})`)
+                .call(d3.axisBottom(x));
+
+            // Add Y axis
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, function (d) { return +d.value; })])
+                .range([height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            const lineGenerator = d3.line().curve(d3.curveCardinal)
+                .x(function (d, index) {
+                    return x(d.date)
+                })
+                .y(function (d) { return y(d.value) })
+
+
+            // console.log(lineGenerator(data));
+
+            svg.append("path")
+                .attr("fill", 'none')
+                .attr('stroke', 'steelblue')
+                .attr('d', lineGenerator(data))
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>

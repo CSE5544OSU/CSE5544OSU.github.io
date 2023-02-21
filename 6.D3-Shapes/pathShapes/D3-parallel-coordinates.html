@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Basic Parallel coordinates chart</title>
+</head>
+
+<body>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz" style="width: 600px; height: 600px;">
+
+<script>
+
+    async function Parallel() {
+
+        //load the data
+        const data = await d3.csv("datasets/iris.csv");
+        console.log(data);
+
+        //set up the svg
+        const margin = {
+                top: 30,
+                right: 10,
+                bottom: 10,
+                left: 0
+            },
+            width = 500 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        const svg = d3
+            .select("#my_dataviz")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called Species
+        dimensions = Object
+            .keys(data[0])
+            .filter(function (d) {
+                return d != "Species"
+            })
+        
+        // For each dimension, I build a linear scale. I store all in a y object
+        const y = {}
+        for (i in dimensions) {
+            name = dimensions[i]
+            y[name] = d3
+                .scaleLinear()
+                .domain(d3.extent(data, function (d) {
+                    return + d[name];
+                }))
+                .range([height, 0])
+        }
+
+        // Build the X scale -> it find the best position for each Y axis
+        x = d3
+            .scalePoint()
+            .range([0, width])
+            .padding(1)
+            .domain(dimensions);
+
+        // The path function take a row of the csv as input, and return x and y
+        // coordinates of the line to draw for this raw.
+        function path(d) {
+            return d3.line()(dimensions.map(function (p) {
+                return [
+                    x(p), y[p](d[p])
+                ];
+            }));
+        }
+
+        // Draw the lines
+        svg.selectAll("myPath")
+            .data(data)
+            .join("path")
+            .attr("d", path)  //The d attribute defines a path to be drawn
+            .style("fill", "none")
+            .style("stroke", "#69b3a2")
+            .style("opacity", 0.6)
+
+        // Draw the axis:
+        svg.selectAll("myAxis")
+            // For each dimension of the dataset I add a 'g' element:
+            .data(dimensions)
+            .enter()
+            .append("g")
+            // I translate this element to its right position on the x axis
+            .attr("transform", function (d) {
+                return "translate(" + x(d) + ")";
+            })
+            // And I build the axis with the call function
+            .each(function (d) {
+                d3.select(this)
+                  .call(d3.axisLeft().scale(y[d]));
+            })
+            // Add axis title
+            .append("text")
+            .style("text-anchor", "middle")
+            .attr("y", -9)
+            .text(function (d) {
+                return d;
+            })
+            .style("fill", "black")
+    }
+
+    Parallel();
+</script>
+
+</body>
+
+</html>

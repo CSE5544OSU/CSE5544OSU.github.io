@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        svg {
+            width: 600px;
+            height: 600px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <svg id="chart">
+
+    </svg>
+
+    <script>
+        function program() {
+
+            // create input data: a square matrix that provides flow between entities
+            const data = [
+                [10, 20, 30],
+                [40, 60, 80],
+                [100, 200, 300]
+            ];
+
+            const groupColors = ["#4e7ba4", "#f18d40", "#df595d"];
+
+            // create the svg area
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", 480)
+                .attr("height", 480)
+                .append("g")
+                .attr("transform", "translate(240,240)")
+
+            const chordGenerator = d3.chord().padAngle(0.05)
+            const chords = chordGenerator(data);
+            console.log(chords);
+
+            const ribbonGenerator = d3.ribbon().radius(200);
+
+            svg.selectAll('group')
+                .data(chords.groups)
+                .join('path')
+                .style("fill", function (d, i) {
+                    return groupColors[i];
+                })
+                .style("stroke", "black")
+                .attr("d", d3.arc()
+                    .innerRadius(200)
+                    .outerRadius(210)
+                )
+
+            svg.append('g')
+                .selectAll('path')
+                .data(chords)
+                .join('path')
+                .attr('d', ribbonGenerator)
+                .style("fill", function (d, i) {
+                    return groupColors[d.source.index];
+                })
+                .style("opacity", 0.5)
+                .style("stroke", "black")
+
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>
