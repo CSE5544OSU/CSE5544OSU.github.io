@@ -86,5 +86,5 @@ Some codes examples and slides are adapted from the following resources:
 * https://www.d3indepth.com/
 * https://d3-graph-gallery.com/
 * https://observablehq.com/@d3/gallery
-* Prof. Han-Wei Shen, Jiayi Xu, and Wenbin He
+* Prof. [Han-Wei Shen](https://github.com/imindseye/D3-tutorial), Jiayi Xu, and Wenbin He
 
