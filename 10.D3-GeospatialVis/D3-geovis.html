@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+
+
+
+
+    <div id="chart" style="width: 600px; height: 600px;">
+
+    </div>
+
+
+
+    <script>
+
+        async function program() {
+
+            //step 1: load the dataset
+            //data source: https://github.com/codeforgermany/click_that_hood/blob/master/public/data/columbus.geojson
+            var data = await d3.json("columbus.geojson");
+            console.log(data);
+
+            //step 2: create the SVG 
+            var width = 600,
+                height = 600;
+
+            var svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+
+            //step 3: create the geoPath() and specify the projection configurations
+            var projection = d3.geoMercator()
+                .scale(50000)
+                .center([-82.98, 39.98]) //[lon, lat]
+                .translate([width / 2, height / 2]); //center of projection is located on the screen (with a [x, y] array)
+
+            var geoGenerator = d3.geoPath()
+                .projection(projection);
+
+            //console.log(geoGenerator(data));
+
+            //psuedo color mapping
+            const colorScale = d3.scaleSequential()
+                .interpolator(d3.interpolateBlues)
+                .domain([1, 30])
+
+            // Draw the map
+            var map = svg.append("g")
+                .selectAll("path")
+                .data(data.features)
+                .join("path")
+                // draw each county
+                .attr("d", function (d) {
+                    return geoGenerator(d);
+                })
+                .style("stroke", "#aaa")
+                .attr("opacity", 0.7)
+                .attr("fill", function (d) {
+                    return colorScale(d.properties.name.length);
+                })
+                .on("mouseover", function (event, d) {
+                    console.log(d.properties.name);
+                    d3.select(this).attr("fill", '#f8f7cc');
+                })
+                .on("mouseleave", function (event, d) {
+                    d3.select(this).attr("fill", colorScale(d.properties.name.length));
+                })
+
+            //add bubbles on the map
+            var points = svg.append('g')
+                .selectAll('dot')
+                .data(data.features)
+                .join('circle')
+                .attr('cx', function (d, i) {
+                    return geoGenerator.centroid(d)[0];
+                })
+                .attr('cy', function (d, i) {
+                    return geoGenerator.centroid(d)[1];
+                })
+                .attr('r', 4)
+                .style("opacity", 0.7)
+                .style('fill', function (d, i) {
+                    return "red"
+                })
+
+        }
+
+        program();
+
+    </script>
+
+
+
+
+</body>
+
+</html>

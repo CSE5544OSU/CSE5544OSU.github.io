@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+
+
+    <div style="width: 1100px; height: 400px;">
+        <div id="chart" style="width: 500px; height: 400px; float: left;">
+
+        </div>
+
+
+    </div>
+
+    <script>
+        async function program() {
+
+            //load the data
+            const data = await d3.csv("iris.csv");
+
+            console.log(data);
+
+            //set up the svg
+            const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+                width = 460 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+
+
+            // Add X axis
+            const x = d3.scaleLinear()
+                .domain([4, 8])
+                .range([60, width + 60]);
+            const xAxis = svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            // Add Y axis
+            const y = d3.scaleLinear()
+                .domain([0, 9])
+                .range([height, 0]);
+            const yAxis = svg.append("g")
+                .attr("transform", "translate(60,0)")
+                .call(d3.axisLeft(y));
+
+            // Color scale: each specie name matches a color
+            const color = d3.scaleOrdinal()
+                .domain(["setosa", "versicolor", "virginica"])
+                .range(["#e41a1c", "#377eb8", "#4daf4a"])
+
+            var points = svg.append('g')
+                .selectAll('dot')
+                .data(data)
+                .join('circle')
+                .attr('cx', function (d, i) {
+                    return x(d.Sepal_Length);
+                })
+                .attr('cy', function (d, i) {
+                    return y(d.Petal_Length);
+                })
+                .attr('r', 4)
+                .style('fill', function (d, i) {
+                    return color(d.Species);
+                })
+                .on("mouseover", function () {
+                    d3.select(this).attr('r', 10);
+                })
+                .on("mouseout", function () {
+                    d3.select(this).attr('r', 4);
+                })
+
+
+            let brush = d3.brush()
+                .on('brush', handleBrush);
+
+            function handleBrush(event) {
+                // get the brush extent and use it to, for example, select elements
+                var extent = event.selection;
+                points.style("fill", function (d) {
+                    let ifIncluded = x(d.Sepal_Length) >= extent[0][0] &&
+                        x(d.Sepal_Length) <= extent[1][0] &&
+                        y(d.Petal_Length) >= extent[0][1] &&
+                        y(d.Petal_Length) <= extent[1][1];
+                    if (ifIncluded) {
+                        return 'orange';
+                    } else {
+                        return color(d.Species);
+                    }
+                })
+            }
+
+            svg.call(brush);
+
+
+  
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>

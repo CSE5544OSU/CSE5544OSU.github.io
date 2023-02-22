@@ -59,23 +59,19 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
         * [Forced-directed layout](https://cse5544osu.github.io/7.D3-Layout/D3-network.html)
 * Course 3: Hierachical-layout, GeoSpatial visualization, and Interactions
     * Hierarchical-Layouts
-        * tree layout
-        * treemap (treemap layout)
-        * packed circles (pack layout)
-        * sunburst (partition layout)
+        * [tree layout](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-tree.html)
+        * [treemap (treemap layout)](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-treemap.html)
+        * [packed circles (pack layout)](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-packedcircles.html)
+        * [sunburst (partition layout)](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-sunburst.html)
     * Interactions
-        * brush
-        * lasso selection
-        * zooming and panning
-        * mouse
+        * [brush](https://cse5544osu.github.io/11.D3-Interaction/D3-brush.html)
+        * [lasso selection](https://cse5544osu.github.io/11.D3-Interaction/D3-lasso.html)
+        * [zooming and panning](https://cse5544osu.github.io/11.D3-Interaction/D3-zoom.html)
+        * [drag](https://cse5544osu.github.io/11.D3-Interaction/D3-drag.html)
     * Animation & Transition
-        * simple transition
+        * [simple transition](https://cse5544osu.github.io/9.D3-Transition/D3-transition.html)
     * Geospatial visualization 
-        * map
-        * choropleth
-        * hexbin map
-    * Multiple view visualization
-        * Covid-19 dashboard
+        * [interactive map of the Columbus city](https://cse5544osu.github.io/10.D3-GeospatialVis/D3-geovis.html)
 
 
 ## Credits 

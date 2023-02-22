@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="chart">
+
+    </div>
+
+    <script>
+        function program() {
+
+            var data = {
+                "name": "A1",
+                "children": [
+                    {
+                        "name": "B1",
+                        "children": [
+                            {
+                                "name": "C1",
+                                "value": 100
+                            },
+                            {
+                                "name": "C2",
+                                "value": 300
+                            },
+                            {
+                                "name": "C3",
+                                "value": 200
+                            }
+                        ]
+                    },
+                    {
+                        "name": "B2",
+                        "value": 200
+                    }
+                ]
+            }
+            var root = d3.hierarchy(data);
+
+            var treeLayout = d3.tree()
+                .size([400, 200]);
+
+            treeLayout(root);
+
+            console.log(root);
+
+            // create the svg area
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", 480)
+                .attr("height", 480)
+                .append("g")
+                .attr("transform", "translate(20,20)")
+
+            // Nodes
+            svg
+                .selectAll('line.link')
+                .data(root.links())
+                .join('line')
+                .attr('x1', function (d) { return d.source.x; })
+                .attr('y1', function (d) { return d.source.y; })
+                .attr('x2', function (d) { return d.target.x; })
+                .attr('y2', function (d) { return d.target.y; })
+                .style('fill', 'none')
+                .style('stroke', '#ccc')
+                .style('stroke-width', '1px');
+
+            svg
+                .selectAll('circle.node')
+                .data(root.descendants())
+                .join('circle')
+                .attr('cx', function (d) { return d.x; })
+                .attr('cy', function (d) { return d.y; })
+                .attr('r', 4)
+                .attr('fill', 'steelblue');
+
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>

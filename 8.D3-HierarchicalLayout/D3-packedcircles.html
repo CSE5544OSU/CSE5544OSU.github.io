@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="chart">
+
+    </div>
+
+    <script>
+        function program() {
+
+            const data = {
+                "name": "A1",
+                "children": [
+                    {
+                        "name": "B1",
+                        "children": [
+                            {
+                                "name": "C1",
+                                "value": 100
+                            },
+                            {
+                                "name": "C2",
+                                "value": 300
+                            },
+                            {
+                                "name": "C3",
+                                "value": 200
+                            }
+                        ]
+                    },
+                    {
+                        "name": "B2",
+                        "value": 200
+                    }
+                ]
+            }
+
+            const packLayout = d3.pack()
+                .size([300, 300]);
+
+            const root = d3.hierarchy(data);
+
+            root.sum(function (d) {
+                return d.value;
+            });
+
+            packLayout(root);
+
+            console.log(root);
+
+            // create the svg area
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", 480)
+                .attr("height", 480)
+                .append("g")
+                .attr("transform", "translate(20,20)")
+                .style('fill', 'steelblue')
+
+
+            const nodes = svg.selectAll('g')
+                .data(root.descendants())
+                .join('g')
+                .attr('transform', function (d) { return 'translate(' + [d.x, d.y] + ')' })
+
+            nodes
+                .append('circle')
+                .attr('r', function (d) { return d.r; })
+                .style("stroke", "white")
+                .style('opacity', '0.3')
+
+            nodes
+                .append('text')
+                .attr('dy', 4)
+                .text(function (d) {
+                    return d.children === undefined ? d.data.name : '';
+                }).style("fill", "black")
+
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>

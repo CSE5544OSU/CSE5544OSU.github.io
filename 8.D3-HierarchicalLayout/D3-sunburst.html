@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div id="chart">
+
+    </div>
+
+    <script>
+        function program() {
+
+            const data = {
+                "name": "A1",
+                "children": [
+                    {
+                        "name": "B1",
+                        "children": [
+                            {
+                                "name": "C1",
+                                "value": 100
+                            },
+                            {
+                                "name": "C2",
+                                "value": 300
+                            },
+                            {
+                                "name": "C3",
+                                "value": 200
+                            }
+                        ]
+                    },
+                    {
+                        "name": "B2",
+                        "value": 200
+                    }
+                ]
+            }
+
+            const radius = 150;
+
+            const arcGenerator = d3.arc()
+                .startAngle(function (d) { return d.x0; })
+                .endAngle(function (d) { return d.x1; })
+                .innerRadius(function (d) { return d.y0; })
+                .outerRadius(function (d) { return d.y1; });
+
+            const rootNode = d3.hierarchy(data);
+
+            rootNode.sum(function (d) {
+                return d.value;
+            });
+
+            const partitionLayout = d3.partition()
+                .size([2 * Math.PI, radius]);
+
+            partitionLayout(rootNode);
+
+            console.log(rootNode);
+
+            // create the svg area
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", 480)
+                .attr("height", 480)
+                .append("g")
+                .attr("transform", "translate(240,240)")
+                .style('fill', 'steelblue')
+
+
+            svg
+                .selectAll('path')
+                .data(rootNode.descendants())
+                .join('path')
+                .attr('d', arcGenerator)
+                .style('stroke', '#ccc')
+                .style('stroke-width', '1px');
+
+
+
+        }
+
+        program();
+    </script>
+
+
+</body>
+
+</html>
