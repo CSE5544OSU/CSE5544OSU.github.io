@@ -57,7 +57,7 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
         * [voronoi](https://cse5544osu.github.io/7.D3-Layout/D3-voronoi.html)
         * [chord](https://cse5544osu.github.io/7.D3-Layout/D3-chord.html)
         * [Forced-directed layout](https://cse5544osu.github.io/7.D3-Layout/D3-network.html)
-* Course 3: Hierachical-layout, GeoSpatial visualization, and Interactions
+* Course 3: Hierachical-layout, GeoSpatial visualization, and Interactions [[lecture slides]](https://cse5544osu.github.io/slides/4.D3-InteractionTransition.pdf)[[lecture video]](https://youtu.be/YH6kVTbnMNc)  
     * Hierarchical-Layouts
         * [tree layout](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-tree.html)
         * [treemap (treemap layout)](https://cse5544osu.github.io/8.D3-HierarchicalLayout/D3-treemap.html)

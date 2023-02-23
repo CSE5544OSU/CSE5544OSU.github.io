@@ -50,7 +50,8 @@
 
             const treemapLayout = d3.treemap()
                 .size([400, 200])
-                .paddingOuter(16);
+                .paddingOuter(16)
+                .tile(d3.treemapSlice);
 
             const root = d3.hierarchy(data);
 
