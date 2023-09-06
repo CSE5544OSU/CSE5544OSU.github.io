@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load iris.json and show a bar chart and a scatterplot</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>D3.js Bar Chart and Scatterplot</h1>
+
+    <!-- SVG container for the bar chart -->
+    <svg id="bar-chart" width="400" height="300"></svg>
+
+    <!-- SVG container for the scatterplot -->
+    <svg id="scatterplot" width="400" height="300"></svg>
+
+    <script>
+        // Load and parse the JSON file
+        d3.json("iris.json")
+            .then(function(data) {
+                // Create the bar chart using D3.js
+                const svgBar = d3.select("#bar-chart");
+                const marginBar = { top: 20, right: 20, bottom: 40, left: 40 };
+                const widthBar = +svgBar.attr("width") - marginBar.left - marginBar.right;
+                const heightBar = +svgBar.attr("height") - marginBar.top - marginBar.bottom;
+
+                const x = d3.scaleBand()
+                    .range([0, widthBar])
+                    .padding(0.1)
+                    .domain(data.map((d, i) => i.toString())); // Use row index as x-axis labels
+
+                const y = d3.scaleLinear()
+                    .range([heightBar, 0])
+                    .domain([0, d3.max(data, d => d.sepalLength)]);
+
+                const gBar = svgBar.append("g")
+                    .attr("transform", "translate(" + marginBar.left + "," + marginBar.top + ")");
+
+                gBar.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", (d, i) => x(i.toString()))
+                    .attr("y", d => y(d.sepalLength))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => heightBar - y(d.sepalLength));
+
+                gBar.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0," + heightBar + ")")
+                    .call(d3.axisBottom(x).tickFormat(i => data[i].species)); // Use species as x-axis labels
+
+                gBar.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
+
+                // Create the scatterplot using D3.js
+                const svgScatter = d3.select("#scatterplot");
+                const marginScatter = { top: 20, right: 20, bottom: 40, left: 40 };
+                const widthScatter = +svgScatter.attr("width") - marginScatter.left - marginScatter.right;
+                const heightScatter = +svgScatter.attr("height") - marginScatter.top - marginScatter.bottom;
+
+                const xScatter = d3.scaleLinear()
+                    .domain([0, d3.max(data, d => d.sepalLength)])
+                    .range([0, widthScatter]);
+
+                const yScatter = d3.scaleBand()
+                    .domain(data.map(d => d.species))
+                    .range([heightScatter, 0]);
+
+                const gScatter = svgScatter.append("g")
+                    .attr("transform", "translate(" + marginScatter.left + "," + marginScatter.top + ")");
+
+                gScatter.selectAll("circle")
+                    .data(data)
+                    .enter().append("circle")
+                    .attr("cx", d => xScatter(d.sepalLength))
+                    .attr("cy", d => yScatter(d.species))
+                    .attr("r", 5) // Circle radius
+                    .attr("fill", "blue");
+
+                gScatter.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0," + heightScatter + ")")
+                    .call(d3.axisBottom(xScatter));
+
+                gScatter.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(yScatter));
+            })
+            .catch(function(error) {
+                console.error("Error loading JSON file:", error);
+            });
+    </script>
+</body>
+</html>
+

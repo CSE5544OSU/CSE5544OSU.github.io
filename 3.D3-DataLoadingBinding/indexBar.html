@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load the Jason file iris.json and show a bar Chart for Sepallength</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>D3.js Bar Chart for Sepal Length</h1>
+
+    <!-- SVG container for the bar chart -->
+    <svg id="bar-chart" width="600" height="400"></svg>
+
+    <script>
+        // Load and parse the JSON file
+        d3.json("iris.json")
+            .then(function(data) {
+                // Extract the sepalLength values from the JSON data
+                const sepalLengthData = data.map(d => d.sepalLength);
+
+                // Create the bar chart using D3.js
+                const svg = d3.select("#bar-chart");
+                const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+                const width = +svg.attr("width") - margin.left - margin.right;
+                const height = +svg.attr("height") - margin.top - margin.bottom;
+
+                const x = d3.scaleBand()
+                    .range([0, width])
+                    .padding(0.1)
+                    .domain(data.map((d, i) => i.toString())); // Use row index as x-axis labels
+
+                const y = d3.scaleLinear()
+                    .range([height, 0])
+                    .domain([0, d3.max(sepalLengthData)]);
+
+                const g = svg.append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                g.selectAll(".bar")
+                    .data(sepalLengthData)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", (d, i) => x(i.toString()))
+                    .attr("y", d => y(d))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d));
+
+                g.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x).tickFormat(i => data[i].species)); // Use species as x-axis labels
+
+                g.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
+
+            })
+            .catch(function(error) {
+                console.error("Error loading JSON file:", error);
+            });
+    </script>
+</body>
+</html>
+
