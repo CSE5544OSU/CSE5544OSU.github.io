@@ -1,6 +1,6 @@
 # D3 tutorial
 
-This repository contains a sequence of D3 examples, slides and lecture videos. Created by Rui Li and Zefeng Qiu at The Ohio State University.
+This repository contains some D3 examples, slides, and four lecture videos developed in Fall 2023, for [Dr. Jian Chen](https://www.cse.osu.edu/~chen.8028) 's CSE 5544 class by two TAs, Rui Li and Zefeng Qiu at The Ohio State University.
 
 ![](https://komarev.com/ghpvc/?username=CSE5544OSU&label=tutorial+views)
 
@@ -14,8 +14,9 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
 * Course 1: D3 Basics [[lecture slides]](https://cse5544osu.github.io/slides/2.D3-Basics.pdf)[[lecture video]](https://youtu.be/fHoRag8TzjM)
     * [Simple bar chart demo](https://cse5544osu.github.io/1.D3-BarExample/index.html)
     * Data loading and binding
-        * [Load csv files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-csv.html) (check the console for results)
-        * [Load json files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-json.html) (check the console for results)
+        * [Load csv files](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-load-csv.html) (check the console for results) 
+        * [Load json file and draw a bar chart](https://cse5544osu.github.io/3.D3-DataLoadingBinding/indexBar.html) (check the console for results)
+        * [Load json file and draw a bar and a scatterplot](https://cse5544osu.github.io/3.D3-DataLoadingBinding/indexBarAndScatterplot.html) (check the console for results)
         * [Data joins](https://cse5544osu.github.io/3.D3-DataLoadingBinding/D3-data-joins.html)
     * Scale functions
         * [scaleLinear](https://cse5544osu.github.io/4.D3-ScaleFunctions/D3-scaleLinear.html)
@@ -76,11 +77,11 @@ This repository contains a sequence of D3 examples, slides and lecture videos. C
 
 ## Credits 
 
-Some codes examples and slides are adapted from the following resources:
-
+Examples and slides are adapted from the following resources:
 * https://d3js.org/
 * https://www.d3indepth.com/
 * https://d3-graph-gallery.com/
 * https://observablehq.com/@d3/gallery
-* Prof. [Han-Wei Shen](https://github.com/imindseye/D3-tutorial), Jiayi Xu, and Wenbin He
+
+Acknowledgment: Prof. [Han-Wei Shen](https://github.com/imindseye/D3-tutorial)'s lecture materials in previous years.
 
