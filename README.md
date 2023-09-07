@@ -11,6 +11,7 @@ This repository contains some D3 examples, slides, and four lecture videos devel
     * [CSS](https://cse5544osu.github.io/WebFoundations/html-with-css.html)
     * [JavaScript](https://cse5544osu.github.io/WebFoundations/html-with-js.html)
     * [SVG](https://cse5544osu.github.io/WebFoundations/svg.html)
+    * [Load json file using JavaScript and draw using svg](https://cse5544osu.github.io/WebFoundations/loadJsonAndDraw.html)
 * Course 1: D3 Basics [[lecture slides]](https://cse5544osu.github.io/slides/2.D3-Basics.pdf)[[lecture video]](https://youtu.be/fHoRag8TzjM)
     * [Simple bar chart demo](https://cse5544osu.github.io/1.D3-BarExample/index.html)
     * Data loading and binding
