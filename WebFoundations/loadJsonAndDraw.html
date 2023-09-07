@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jQuery+ CSS style + SVG  Bar Chart</title>
+    <title>jQuery + SVG Bar Chart</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -11,13 +11,6 @@
 
     <!-- SVG container for the bar chart -->
     <svg id="bar-chart" width="1200" height="300"></svg>
-
-    <style>
-        /* Define a CSS class for the bars */
-        .bar {
-            fill: turquoise; /* Set the fill color to turquoise */
-        }
-    </style>
 
     <script>
         // Function to draw a bar chart using jQuery and SVG
@@ -75,7 +68,7 @@
             yAxis.setAttribute("y1", 0);
             yAxis.setAttribute("x2", 0);
             yAxis.setAttribute("y2", chartHeight);
-            yAxis.setAttribute("stroke", "grey");
+            yAxis.setAttribute("stroke", "black");
             chartGroup.appendChild(yAxis);
         }
 
@@ -93,4 +86,3 @@
     </script>
 </body>
 </html>
-
