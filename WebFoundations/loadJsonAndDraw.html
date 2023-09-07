@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jQuery Bar Chart</title>
+    <title>jQuery+ CSS style + SVG  Bar Chart</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>jQuery Bar Chart</h1>
 
     <!-- SVG container for the bar chart -->
-    <svg id="bar-chart" width="400" height="300"></svg>
+    <svg id="bar-chart" width="1200" height="300"></svg>
+
+    <style>
+        /* Define a CSS class for the bars */
+        .bar {
+            fill: turquoise; /* Set the fill color to turquoise */
+        }
+    </style>
 
     <script>
         // Function to draw a bar chart using jQuery and SVG
@@ -19,7 +26,7 @@
             const sepalLengthData = data.map(d => d.sepalLength);
 
             // Define SVG dimensions and margins
-            const svgWidth = 400;
+            const svgWidth = 1200;
             const svgHeight = 300;
             const margin = { top: 20, right: 20, bottom: 40, left: 40 };
 
@@ -50,15 +57,14 @@
                 bar.setAttribute("width", barWidth);
                 bar.setAttribute("height", (sepalLengthData[i] / maxSepalLength) * chartHeight);
                 chartGroup.appendChild(bar);
-            }
 
-            // Create x-axis labels
-            for (let i = 0; i < data.length; i++) {
+                // Add title labels to the x-axis and tilt them by 45 degrees
                 const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 label.setAttribute("class", "x-label");
                 label.setAttribute("x", (i + 0.5) * barWidth);
                 label.setAttribute("y", chartHeight + 20);
                 label.setAttribute("text-anchor", "middle");
+                label.setAttribute("transform", "rotate(45 " + ((i + 0.5) * barWidth) + " " + (chartHeight + 20) + ")");
                 label.textContent = data[i].species;
                 chartGroup.appendChild(label);
             }
@@ -69,7 +75,7 @@
             yAxis.setAttribute("y1", 0);
             yAxis.setAttribute("x2", 0);
             yAxis.setAttribute("y2", chartHeight);
-            yAxis.setAttribute("stroke", "black");
+            yAxis.setAttribute("stroke", "grey");
             chartGroup.appendChild(yAxis);
         }
 
