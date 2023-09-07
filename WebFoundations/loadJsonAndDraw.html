@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Bar Chart</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>jQuery Bar Chart</h1>
+
+    <!-- SVG container for the bar chart -->
+    <svg id="bar-chart" width="400" height="300"></svg>
+
+    <script>
+        // Function to draw a bar chart using jQuery and SVG
+        function drawBarChart(data) {
+            // Extract the sepalLength values from the JSON data
+            const sepalLengthData = data.map(d => d.sepalLength);
+
+            // Define SVG dimensions and margins
+            const svgWidth = 400;
+            const svgHeight = 300;
+            const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+
+            // Calculate the chart dimensions
+            const chartWidth = svgWidth - margin.left - margin.right;
+            const chartHeight = svgHeight - margin.top - margin.bottom;
+
+            // Create an SVG element
+            const svg = document.getElementById("bar-chart");
+            svg.setAttribute("width", svgWidth);
+            svg.setAttribute("height", svgHeight);
+
+            // Create a group for the chart
+            const chartGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            chartGroup.setAttribute("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.appendChild(chartGroup);
+
+            // Calculate the maximum value for scaling the y-axis
+            const maxSepalLength = Math.max(...sepalLengthData);
+
+            // Create bars
+            const barWidth = chartWidth / sepalLengthData.length;
+            for (let i = 0; i < sepalLengthData.length; i++) {
+                const bar = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                bar.setAttribute("class", "bar");
+                bar.setAttribute("x", i * barWidth);
+                bar.setAttribute("y", chartHeight - (sepalLengthData[i] / maxSepalLength) * chartHeight);
+                bar.setAttribute("width", barWidth);
+                bar.setAttribute("height", (sepalLengthData[i] / maxSepalLength) * chartHeight);
+                chartGroup.appendChild(bar);
+            }
+
+            // Create x-axis labels
+            for (let i = 0; i < data.length; i++) {
+                const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                label.setAttribute("class", "x-label");
+                label.setAttribute("x", (i + 0.5) * barWidth);
+                label.setAttribute("y", chartHeight + 20);
+                label.setAttribute("text-anchor", "middle");
+                label.textContent = data[i].species;
+                chartGroup.appendChild(label);
+            }
+
+            // Create y-axis
+            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yAxis.setAttribute("x1", 0);
+            yAxis.setAttribute("y1", 0);
+            yAxis.setAttribute("x2", 0);
+            yAxis.setAttribute("y2", chartHeight);
+            yAxis.setAttribute("stroke", "black");
+            chartGroup.appendChild(yAxis);
+        }
+
+        // Fetch data using jQuery
+        $(document).ready(function() {
+            $.getJSON("iris.json")
+                .done(function(data) {
+                    // Call the function to draw the bar chart
+                    drawBarChart(data);
+                })
+                .fail(function(error) {
+                    console.error("Error loading JSON file:", error);
+                });
+        });
+    </script>
+</body>
+</html>
+
