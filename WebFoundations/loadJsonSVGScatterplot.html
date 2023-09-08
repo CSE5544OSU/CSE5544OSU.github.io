@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery SVG Scatter Plot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>jQuery Scatter Plot</h1>
+
+    <!-- SVG container for the scatter plot -->
+    <svg id="scatter-plot" width="400" height="300"></svg>
+
+    <script>
+        // Function to draw a scatter plot using jQuery and SVG
+        function drawScatterPlot(data) {
+            // Extract the sepalLength and petalLength values from the JSON data
+            const sepalLengthData = data.map(d => d.sepalLength);
+            const petalLengthData = data.map(d => d.petalLength);
+
+            // Define SVG dimensions and margins
+            const svgWidth = 400;
+            const svgHeight = 300;
+            const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+
+            // Calculate the chart dimensions
+            const chartWidth = svgWidth - margin.left - margin.right;
+            const chartHeight = svgHeight - margin.top - margin.bottom;
+
+            // Create an SVG element
+            const svg = document.getElementById("scatter-plot");
+            svg.setAttribute("width", svgWidth);
+            svg.setAttribute("height", svgHeight);
+
+            // Create a group for the chart
+            const chartGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            chartGroup.setAttribute("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.appendChild(chartGroup);
+
+            // Create circles for each data point
+            for (let i = 0; i < sepalLengthData.length; i++) {
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("class", "point");
+                circle.setAttribute("cx", (sepalLengthData[i] - Math.min(...sepalLengthData)) / (Math.max(...sepalLengthData) - Math.min(...sepalLengthData)) * chartWidth);
+                circle.setAttribute("cy", chartHeight - (petalLengthData[i] - Math.min(...petalLengthData)) / (Math.max(...petalLengthData) - Math.min(...petalLengthData)) * chartHeight);
+                circle.setAttribute("r", 4); // Set the circle radius
+                chartGroup.appendChild(circle);
+            }
+
+            // Create x-axis
+            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            xAxis.setAttribute("x1", 0);
+            xAxis.setAttribute("y1", chartHeight);
+            xAxis.setAttribute("x2", chartWidth);
+            xAxis.setAttribute("y2", chartHeight);
+            xAxis.setAttribute("stroke", "black");
+            chartGroup.appendChild(xAxis);
+
+            // Create y-axis
+            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yAxis.setAttribute("x1", 0);
+            yAxis.setAttribute("y1", 0);
+            yAxis.setAttribute("x2", 0);
+            yAxis.setAttribute("y2", chartHeight);
+            yAxis.setAttribute("stroke", "black");
+            chartGroup.appendChild(yAxis);
+        }
+
+        // Fetch data using jQuery
+        $(document).ready(function() {
+            $.getJSON("iris.json")
+                .done(function(data) {
+                    // Call the function to draw the scatter plot
+                    drawScatterPlot(data);
+                })
+                .fail(function(error) {
+                    console.error("Error loading JSON file:", error);
+                });
+        });
+    </script>
+</body>
+</html>
+
