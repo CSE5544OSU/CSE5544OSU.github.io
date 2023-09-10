@@ -1,6 +1,6 @@
 # D3 tutorial
 
-This repository contains some D3 examples, slides, and four lecture videos developed in the past years, for [Dr. Jian Chen](https://www.cse.osu.edu/~chen.8028) 's CSE 5544 class by Dr. Chen and her two TAs, Rui Li and Zefeng Qiu at The Ohio State University.
+This repository contains some D3 examples, slides, and four lecture videos developed in the past years, for [Dr. Jian Chen](https://www.cse.osu.edu/~chen.8028) 's CSE 5544 class mainly developed by her two TAs, Rui Li and Zefeng Qiu at The Ohio State University, with input from students. 
 
 ![](https://komarev.com/ghpvc/?username=CSE5544OSU&label=tutorial+views)
 
