@@ -76,7 +76,8 @@ This repository contains some D3 examples, slides, and four lecture videos devel
     * Geospatial visualization 
         * [interactive map of the Columbus city](https://cse5544osu.github.io/10.D3-GeospatialVis/D3-geovis.html)
 * Course 4: Dashboard view with with streamlit and python [[lecture video]](https://www.youtube.com/watch?v=z4-b3iH4rS0)
-        * [code] (https://github.com/CSE5544OSU/CSE5544OSU.github.io/tree/main/covid-19%20dashboard)
+     * Code 
+         * [code] (https://github.com/CSE5544OSU/CSE5544OSU.github.io/tree/main/covid-19%20dashboard)
   
 
 ## Credits 
